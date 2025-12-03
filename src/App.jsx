@@ -1,35 +1,47 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Navbar from './components/Navbar';
+import Home from './pages/Home';
+import About from './pages/About';
+import Services from './pages/Services';
+import Contact from './pages/Contact';
+import Service_CADEngineering from './pages/Service_CADEngineering';
+import Service_LaserCutting from './pages/Service_LaserCutting';
+import Service_ProductDevelopment from './pages/Service_ProductDevelopment';
+import Service_WebDevelopment from './pages/Service_WebDevelopment';
+import Service_3DVisualization from './pages/Service_Visualization3D';
+import Footer from './components/Footer';
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <Router>
+      <div className="bg-background-light dark:bg-background-dark">
+        <Navbar />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/services" element={<Services />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/services/cad-engineering" element={<Service_CADEngineering />} />
+          <Route path="/services/laser-cutting" element={<Service_LaserCutting />} />
+          <Route path="/services/product-development" element={<Service_ProductDevelopment />} />
+          <Route path="/services/web-development" element={<Service_WebDevelopment />} />
+          <Route path="/services/3d-visualization" element={<Service_3DVisualization />} />
+        </Routes>
+        <Footer />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    </Router>
+
+
+
+
+    // <div className="min-h-screen flex items-center justify-center bg-black">
+    //   <h1 className="text-4xl font-bold text-white underline">
+    //     Tailwind is working ✅
+    //   </h1>
+    // </div>
+  );
 }
 
-export default App
+export default App;
