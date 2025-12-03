@@ -6,32 +6,38 @@ const services = [
   {
     title: 'Product Development',
     description: 'End-to-end development services, from concept to a market-ready product.',
-    path: '/services/product-development'
+    path: '/services/product-development',
+    image: 'https://cdn.pixabay.com/photo/2022/05/23/22/48/art-7217326_1280.jpg'
   },
   {
     title: 'CAD & Engineering',
     description: 'High-precision 2D and 3D modeling for a variety of needs.',
-    path: '/services/cad-engineering'
+    path: '/services/cad-engineering',
+    image: 'https://cdn.pixabay.com/photo/2018/02/13/03/45/ship-3149740_1280.jpg'
   },
   {
     title: 'Laser Cutting & Digital Fabrication',
     description: 'Transforming digital designs into physical objects with precision and speed.',
-    path: '/services/laser-cutting'
+    path: '/services/laser-cutting',
+    image: 'https://cdn.pixabay.com/photo/2016/09/28/10/18/camera-1700110_1280.jpg'
   },
   {
     title: 'Web Development',
     description: 'Creating a seamless user experience backed by robust and scalable technology.',
-    path: '/services/web-development'
+    path: '/services/web-development',
+    image: 'https://cdn.pixabay.com/photo/2019/06/17/19/48/source-4280758_1280.jpg'
   },
   {
     title: 'Visualization & 3D Rendering',
     description: 'Bringing your designs to life with stunningly realistic 3D renderings.',
-    path: '/services/3d-visualization'
+    path: '/services/3d-visualization',
+    image: 'https://cdn.pixabay.com/photo/2015/11/06/11/39/single-family-home-1026368_1280.jpg'
   },
    {
     title: 'Book a consultation',
     description: 'Not sure where to start? We can help.',
-    path: '/contact'
+    path: '/contact',
+    image: 'https://cdn.pixabay.com/photo/2022/01/04/18/47/oil-6915740_1280.jpg'
   }
 ];
 
@@ -65,7 +71,7 @@ const Home = () => {
       </div>
 
       {/* Services Preview Section */}
-      <div className="relative py-24 sm:py-32 bg-cover bg-center" style={{ backgroundImage: 'url(https://placehold.co/1920x1080/ffffff/f0f4f8?text=)' }}>
+      <div className="relative py-24 sm:py-32 bg-cover bg-center" style={{ backgroundImage: 'url(https://cdn.pixabay.com/photo/2022/01/04/18/47/oil-6915740_1280.jpg)' }}>
          <div className="absolute inset-0 bg-white opacity-75"></div>
         <div className="relative mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
@@ -78,6 +84,7 @@ const Home = () => {
             <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-3">
               {services.map((service) => (
                 <div key={service.title} className="flex flex-col bg-white/50 dark:bg-slate-800/50 p-6 rounded-lg shadow-lg">
+                   {service.image && <img src={service.image} alt={service.title} className="h-48 w-full object-cover rounded-md mb-4" />}
                   <dt className="flex items-center gap-x-3 text-base font-semibold leading-7 text-gray-900 dark:text-white">
                     {service.title}
                   </dt>
