@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 const services = [
@@ -78,27 +78,33 @@ const services = [
 ];
 
 const Services = () => {
+  const [offsetY, setOffsetY] = useState(0);
+  const handleScroll = () => setOffsetY(window.scrollY);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
-      <main className="flex-1" style={{
-                  backgroundImage:
-                    `linear-gradient(rgba(16, 25, 34, 0.8), rgba(16, 25, 34, 0.9)), url('https://cdn.pixabay.com/photo/2019/04/04/08/01/icon-4102192_1280.png')`,
-                }}>
+      <main
+        className="flex-1"
+        style={{
+          backgroundImage: `linear-gradient(rgba(16, 25, 34, 0.8), rgba(16, 25, 34, 0.9)), url('https://cdn.pixabay.com/photo/2019/04/04/08/01/icon-4102192_1280.png')`,
+          backgroundSize: 'cover',
+          backgroundPosition: `center ${offsetY * 0.5}px`,
+        }}
+      >
         {/* HeroSection */}
         <section className="py-20 sm:py-28">
           <div className="container mx-auto max-w-7xl px-4">
-            <div className="@container">
-              <div
-                className="flex min-h-[400px] flex-col gap-6 rounded-xl bg-slate-900 dark:bg-slate-800 bg-cover bg-center bg-no-repeat items-center justify-center p-8 text-center"
-                
-              >
-                <div className="flex flex-col gap-4 max-w-3xl">
-                  <h1 className="text-white text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Our Services</h1>
-                  <h2 className="text-slate-300 dark:text-slate-400 text-lg leading-relaxed">
-                    SFTechProjects is your partner in turning complex ideas into tangible products through a comprehensive range of expert engineering and prototyping services.
-                  </h2>
-                </div>
-              </div>
+            <div className="mx-auto max-w-3xl text-center">
+              <h1 className="text-white text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Our Services</h1>
+              <h2 className="mt-6 text-slate-300 dark:text-slate-400 text-lg leading-relaxed">
+                SFTechProjects is your partner in turning complex ideas into tangible products through a comprehensive range of expert engineering and prototyping services.
+              </h2>
             </div>
           </div>
         </section>
@@ -108,17 +114,17 @@ const Services = () => {
           <div className="container mx-auto max-w-7xl px-4">
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {services.map((service) => (
-                <div key={service.title} className="flex flex-col gap-4 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-sm">
+                <div key={service.title} className="flex flex-col gap-4 rounded-xl border border-white/20 bg-white/10 dark:bg-slate-900/10 p-6 shadow-lg backdrop-blur-md">
                    <img src={service.image} alt={service.title} className="h-48 w-full object-cover rounded-md mb-4" />
-                  <h3 className="text-xl font-bold text-slate-900 dark:text-slate-50">{service.title}</h3>
-                  <p className="text-slate-600 dark:text-slate-400">{service.description}</p>
-                  <ul className="space-y-2 text-slate-600 dark:text-slate-400 text-sm list-disc list-inside">
+                  <h3 className="text-xl font-bold text-slate-50">{service.title}</h3>
+                  <p className="text-slate-300 dark:text-slate-400">{service.description}</p>
+                  <ul className="space-y-2 text-slate-300 dark:text-slate-400 text-sm list-disc list-inside">
                     {service.details.map((detail) => (
                       <li key={detail}>{detail}</li>
                     ))}
                   </ul>
                   <div className="mt-auto pt-4">
-                    <Link to={service.path} className="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/10 text-primary dark:bg-primary/20 dark:text-primary text-sm font-bold hover:bg-primary/20 dark:hover:bg-primary/30">
+                    <Link to={service.path} className="flex w-full min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary/20 text-primary dark:bg-primary/30 dark:text-primary text-sm font-bold hover:bg-primary/30 dark:hover:bg-primary/40">
                       <span className="truncate">Learn More</span>
                     </Link>
                   </div>
@@ -131,7 +137,7 @@ const Services = () => {
         {/* CTA Banner */}
         <section className="py-20 sm:py-28">
           <div className="container mx-auto max-w-7xl px-4">
-            <div className="rounded-xl bg-slate-900 dark:bg-slate-800 py-16 px-8 text-center">
+            <div className="rounded-xl bg-slate-900/50 dark:bg-slate-800/50 py-16 px-8 text-center shadow-lg backdrop-blur-md">
               <div className="mx-auto max-w-2xl">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Ready to Start Your Project?</h2>
                 <p className="mt-4 text-lg leading-8 text-slate-300">

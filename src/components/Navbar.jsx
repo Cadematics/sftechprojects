@@ -19,9 +19,8 @@ const Navbar = () => {
             <Link to="/services" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Services</Link>
             <Link to="/about" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">About</Link>
             <Link to="/contact" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Contact</Link>
-            <Link to="/store" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Store</Link>
             <Link to="/admin" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Admin</Link>
-            <Link to="/contact" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-indigo-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-indigo-500">
+            <Link to="/quote" className="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-indigo-600 text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-indigo-500">
               <span className="truncate">Request a Quote</span>
             </Link>
           </div>
@@ -45,9 +44,8 @@ const Navbar = () => {
             <Link to="/services" className="block px-3 py-2 rounded-md text-base font-medium text-slate-900 dark:text-slate-50">Services</Link>
             <Link to="/about" className="block px-3 py-2 rounded-md text-base font-medium text-slate-900 dark:text-slate-50">About</Link>
             <Link to="/contact" className="block px-3 py-2 rounded-md text-base font-medium text-slate-900 dark:text-slate-50">Contact</Link>
-            <Link to="/store" className="block px-3 py-2 rounded-md text-base font-medium text-slate-900 dark:text-slate-50">Store</Link>
             <Link to="/admin" className="block px-3 py-2 rounded-md text-base font-medium text-slate-900 dark:text-slate-50">Admin</Link>
-            <Link to="/contact" className="block w-full text-left mt-2 px-3 py-2 rounded-md text-base font-medium bg-indigo-600 text-white hover:bg-indigo-500">
+            <Link to="/quote" className="block w-full text-left mt-2 px-3 py-2 rounded-md text-base font-medium bg-indigo-600 text-white hover:bg-indigo-500">
               Request a Quote
             </Link>
           </div>
