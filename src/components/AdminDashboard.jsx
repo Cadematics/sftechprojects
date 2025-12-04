@@ -1,7 +1,7 @@
-
 import React from 'react';
 import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
+import QuoteRequestsTable from './QuoteRequestsTable';
 
 const AdminDashboard = ({ user }) => {
   const handleLogout = async () => {
@@ -34,20 +34,8 @@ const AdminDashboard = ({ user }) => {
       <main>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <div className="px-4 py-6 sm:px-0">
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {/* Quote Requests Card */}
-              <div className="bg-white overflow-hidden shadow rounded-lg">
-                <div className="p-5">
-                  <h3 className="text-lg font-medium text-gray-900">
-                    Quote Requests
-                  </h3>
-                  <div className="mt-4">
-                    <p className="text-sm text-gray-500">
-                      Placeholder for quote requests content.
-                    </p>
-                  </div>
-                </div>
-              </div>
+            <div className="grid grid-cols-1 gap-6">
+              <QuoteRequestsTable />
 
               {/* Messages Card */}
               <div className="bg-white overflow-hidden shadow rounded-lg">
