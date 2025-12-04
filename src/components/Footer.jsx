@@ -4,49 +4,39 @@ import { Link } from 'react-router-dom';
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-slate-50 border-t border-slate-200">
-      <div className="container mx-auto max-w-7xl px-4 py-16">
-        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-8">
-          <div className="col-span-full lg:col-span-2">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="text-primary">
-                <svg className="h-7 w-7" fill="none" viewBox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M13.8261 30.5736C16.7203 29.8826 20.2244 29.4783 24 29.4783C27.7756 29.4783 31.2797 29.8826 34.1739 30.5736C36.9144 31.2278 39.9967 32.7669 41.3563 33.8352L24.8486 7.36089C24.4571 6.73303 23.5429 6.73303 23.1514 7.36089L6.64374 33.8352C8.00331 32.7669 11.0856 31.2278 13.8261 30.5736Z" fill="currentColor"></path>
-                  <path clipRule="evenodd" d="M39.998 35.764C39.9944 35.7463 39.9875 35.7155 39.9748 35.6706C39.9436 35.5601 39.8949 35.4259 39.8346 35.2825C39.8168 35.2403 39.7989 35.1993 39.7813 35.1602C38.5103 34.2887 35.9788 33.0607 33.7095 32.5189C30.9875 31.8691 27.6413 31.4783 24 31.4783C20.3587 31.4783 17.0125 31.8691 14.2905 32.5189C12.0012 33.0654 9.44505 34.3104 8.18538 35.1832C8.17384 35.2075 8.16216 35.233 8.15052 35.2592C8.09919 35.3751 8.05721 35.4886 8.02977 35.589C8.00356 35.6848 8.00039 35.7333 8.00004 35.7388C8.00004 35.739 8 35.7393 8.00004 35.7388C8.00004 35.7641 8.0104 36.0767 8.68485 36.6314C9.34546 37.1746 10.4222 37.7531 11.9291 38.2772C14.9242 39.319 19.1919 40 24 40C28.8081 40 33.0758 39.319 36.0709 38.2772C37.5778 37.7531 38.6545 37.1746 39.3151 36.6314C39.9006 36.1499 39.9857 35.8511 39.998 35.764ZM4.95178 32.7688L21.4543 6.30267C22.6288 4.4191 25.3712 4.41909 26.5457 6.30267L43.0534 32.777C43.0709 32.8052 43.0878 32.8338 43.104 32.8629L41.3563 33.8352C43.104 32.8629 43.1038 32.8626 43.104 32.8629L43.1051 32.865L43.1065 32.8675L43.1101 32.8739L43.1199 32.8918C43.1276 32.906 43.1377 32.9246 43.1497 32.9473C43.1738 32.9925 43.2062 33.0545 43.244 33.1299C43.319 33.2792 43.4196 33.489 43.5217 33.7317C43.6901 34.1321 44 34.9311 44 35.7391C44 37.4427 43.003 38.7775 41.8558 39.7209C40.6947 40.6757 39.1354 41.4464 37.385 42.0552C33.8654 43.2794 29.133 44 24 44C18.867 44 14.1346 43.2794 10.615 42.0552C8.86463 41.4464 7.30529 40.6757 6.14419 39.7209C4.99695 38.7775 3.99999 37.4427 3.99999 35.7391C3.99999 34.8725 4.29264 34.0922 4.49321 33.6393C4.60375 33.3898 4.71348 33.1804 4.79687 33.0311C4.83898 32.9556 4.87547 32.8935 4.9035 32.8471C4.91754 32.8238 4.92954 32.8043 4.93916 32.7889L4.94662 32.777L4.95178 32.7688ZM35.9868 29.004L24 9.77997L12.0131 29.004C12.4661 28.8609 12.9179 28.7342 13.3617 28.6282C16.4281 27.8961 20.0901 27.4783 24 27.4783C27.9099 27.4783 31.5719 27.8961 34.6383 28.6282C35.082 28.7342 35.5339 28.8609 35.9868 29.004Z" fill="currentColor" fillRule="evenodd"></path>
-                </svg>
-              </div>
-              <h2 className="text-slate-900 text-xl font-bold leading-tight tracking-[-0.015em]">SFTechProjects</h2>
-            </div>
-            <p className="text-slate-600 text-sm">Professional engineering services for modern challenges. From concept to creation, we bring your ideas to life with precision and expertise.</p>
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-800 mb-4">Services</h4>
-            <ul className="space-y-2">
-              <li><Link to="/services/product-development" className="text-sm text-slate-600 hover:text-primary transition-colors">Product Development</Link></li>
-              <li><Link to="/services/cad-engineering" className="text-sm text-slate-600 hover:text-primary transition-colors">CAD &amp; Engineering</Link></li>
-              <li><Link to="/services/laser-cutting" className="text-sm text-slate-600 hover:text-primary transition-colors">Digital Fabrication</Link></li>
-              <li><Link to="/services/3d-printing" className="text-sm text-slate-600 hover:text-primary transition-colors">3D Printing</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-800 mb-4">Company</h4>
-            <ul className="space-y-2">
-              <li><Link to="/about" className="text-sm text-slate-600 hover:text-primary transition-colors">About Us</Link></li>
-              <li><Link to="/projects" className="text-sm text-slate-600 hover:text-primary transition-colors">Projects</Link></li>
-              <li><Link to="/careers" className="text-sm text-slate-600 hover:text-primary transition-colors">Careers</Link></li>
-              <li><Link to="/contact" className="text-sm text-slate-600 hover:text-primary transition-colors">Contact</Link></li>
-            </ul>
-          </div>
-          <div>
-            <h4 className="font-bold text-slate-800 mb-4">Legal</h4>
-            <ul className="space-y-2">
-              <li><Link to="/privacy" className="text-sm text-slate-600 hover:text-primary transition-colors">Privacy Policy</Link></li>
-              <li><Link to="/terms" className="text-sm text-slate-600 hover:text-primary transition-colors">Terms of Service</Link></li>
-            </ul>
-          </div>
+    <footer className="bg-white">
+      <div className="mx-auto max-w-7xl px-6 py-12 md:flex md:items-center md:justify-between lg:px-8">
+        <div className="flex justify-center space-x-6 md:order-2">
+          <a href="#" className="text-gray-400 hover:text-gray-500">
+            <span className="sr-only">Facebook</span>
+            {/* Replace with actual icon */}
+            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                fillRule="evenodd"
+                d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z"
+                clipRule="evenodd"
+              />
+            </svg>
+          </a>
+          <a href="#" className="text-gray-400 hover:text-gray-500">
+            <span className="sr-only">Twitter</span>
+            {/* Replace with actual icon */}
+            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.71v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+            </svg>
+          </a>
+          <a href="#" className="text-gray-400 hover:text-gray-500">
+            <span className="sr-only">GitHub</span>
+            {/* Replace with actual icon */}
+            <svg className="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path fillRule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.165 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.604-3.369-1.342-3.369-1.342-.454-1.157-1.11-1.465-1.11-1.465-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.112-4.555-4.949 0-1.09.39-1.984 1.03-2.682-.103-.253-.446-1.27.098-2.646 0 0 .84-.27 2.75 1.022A9.564 9.564 0 0112 6.82c.85.004 1.705.115 2.504.336 1.909-1.292 2.747-1.022 2.747-1.022.546 1.376.202 2.393.1 2.646.64.698 1.03 1.592 1.03 2.682 0 3.847-2.337 4.694-4.566 4.942.359.308.678.92.678 1.854 0 1.338-.012 2.419-.012 2.746 0 .267.18.577.688.482A10.001 10.001 0 0022 12c0-5.523-4.477-10-10-10z" clipRule="evenodd" />
+            </svg>
+          </a>
         </div>
-        <div className="mt-12 border-t border-slate-200 pt-8 text-center text-sm text-slate-500">
-          <p>© 2024 SFTechProjects. All rights reserved.</p>
+        <div className="mt-8 md:order-1 md:mt-0">
+          <p className="text-center text-xs leading-5 text-gray-500">
+            &copy; 2023 SFTechProjects. All rights reserved.
+          </p>
         </div>
       </div>
     </footer>

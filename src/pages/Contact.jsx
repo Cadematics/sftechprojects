@@ -3,82 +3,103 @@ import React from 'react';
 
 const Contact = () => {
   return (
-    <main className="flex flex-1 justify-center py-10 px-4 sm:px-8 md:px-16 lg:px-24">
-      <div className="flex flex-col w-full max-w-[1200px] flex-1">
-        <div className="flex flex-wrap justify-between gap-3 p-4">
-          <div className="flex min-w-72 flex-col gap-3 text-center w-full">
-            <h1 className="text-slate-900 text-4xl md:text-5xl font-black leading-tight tracking-[-0.033em]">Contact Us</h1>
-            <p className="text-slate-500 text-base md:text-lg font-normal leading-normal max-w-2xl mx-auto">
-              Have a question or need assistance? Reach out to us using the form below, or find our contact information.
+    <main className="bg-gray-50 text-gray-900">
+      <div className="relative isolate overflow-hidden py-24 sm:py-32">
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl text-center">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Contact Us</h2>
+            <p className="mt-2 text-lg leading-8 text-gray-600">
+              Have a project in mind or just want to say hi? We'd love to hear from you.
             </p>
           </div>
-        </div>
-        <div className="mt-12 grid grid-cols-1 lg:grid-cols-3 gap-12 p-4">
-          <div className="lg:col-span-2 bg-white p-8 rounded-xl border border-slate-200">
-            <h2 className="text-slate-900 text-[22px] font-bold leading-tight tracking-[-0.015em] pb-6">Send us a Message</h2>
-            <form className="flex flex-col gap-6">
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <label className="flex flex-col flex-1">
-                  <p className="text-slate-800 text-base font-medium leading-normal pb-2">Name</p>
-                  <input className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 bg-background-light h-12 placeholder:text-slate-400 p-3 text-base font-normal leading-normal" placeholder="Enter your full name" />
-                </label>
-                <label className="flex flex-col flex-1">
-                  <p className="text-slate-800 text-base font-medium leading-normal pb-2">Email</p>
-                  <input className="form-input flex w-full min-w-0 flex-1 resize-none overflow-hidden rounded-lg text-slate-900 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 bg-background-light h-12 placeholder:text-slate-400 p-3 text-base font-normal leading-normal" placeholder="you@company.com" type="email" />
-                </label>
-              </div>
-              <label className="flex flex-col flex-1">
-                <p className="text-slate-800 text-base font-medium leading-normal pb-2">Message Body</p>
-                <textarea className="form-textarea flex w-full min-w-0 flex-1 resize-y overflow-hidden rounded-lg text-slate-900 focus:outline-0 focus:ring-2 focus:ring-primary/50 border border-slate-300 bg-background-light min-h-36 placeholder:text-slate-400 p-3 text-base font-normal leading-normal" placeholder="Let us know how we can help..."></textarea>
-              </label>
-              <div className="flex flex-col gap-2">
-                <p className="text-slate-800 text-base font-medium leading-normal">File Upload (Optional)</p>
-                <div className="relative flex w-full cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-slate-300 bg-background-light px-6 py-10 text-center transition-colors hover:border-primary/50">
-                  <div className="flex flex-col items-center text-slate-500">
-                    <span className="material-symbols-outlined text-4xl mb-2">upload_file</span>
-                    <p className="text-sm font-medium">Click to upload or drag and drop</p>
-                    <p className="text-xs text-slate-400">PDF, PNG, JPG up to 10MB</p>
-                  </div>
-                  <input className="absolute inset-0 h-full w-full cursor-pointer opacity-0" multiple type="file" />
+          <div className="mx-auto mt-16 grid max-w-lg grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
+            {/* Contact Form */}
+            <div className="w-full">
+                <form action="#" method="POST" className="space-y-6">
+                <div>
+                    <label htmlFor="name" className="block text-sm font-semibold leading-6 text-gray-900">
+                    Full name
+                    </label>
+                    <div className="mt-2.5">
+                    <input
+                        type="text"
+                        name="name"
+                        id="name"
+                        autoComplete="name"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    </div>
                 </div>
-              </div>
-              <button className="flex w-full sm:w-auto items-center justify-center rounded-lg h-12 px-8 bg-primary text-white text-base font-bold leading-normal tracking-[0.015em] transition-colors hover:bg-primary/90" type="submit">
-                <span className="truncate">Send Message</span>
-              </button>
-            </form>
-          </div>
-          <div className="lg:col-span-1">
-            <div className="bg-white p-8 rounded-xl border border-slate-200 h-full">
-              <h2 className="text-slate-900 text-[22px] font-bold leading-tight tracking-[-0.015em] pb-6">Our Contact Details</h2>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-start gap-4">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <span className="material-symbols-outlined">mail</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-bold text-slate-800">Email</h3>
-                    <a className="text-slate-500 hover:text-primary" href="mailto:info@sftechprojects.com">info@sftechprojects.com</a>
-                  </div>
+                <div>
+                    <label htmlFor="email" className="block text-sm font-semibold leading-6 text-gray-900">
+                    Email
+                    </label>
+                    <div className="mt-2.5">
+                    <input
+                        type="email"
+                        name="email"
+                        id="email"
+                        autoComplete="email"
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                    />
+                    </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <span className="material-symbols-outlined">call</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-bold text-slate-800">Phone</h3>
-                    <a className="text-slate-500 hover:text-primary" href="tel:+11234567890">+1 (123) 456-7890</a>
-                  </div>
+                <div>
+                    <label htmlFor="message" className="block text-sm font-semibold leading-6 text-gray-900">
+                    Message
+                    </label>
+                    <div className="mt-2.5">
+                    <textarea
+                        name="message"
+                        id="message"
+                        rows={4}
+                        className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                        defaultValue={''}
+                    />
+                    </div>
                 </div>
-                <div className="flex items-start gap-4">
-                  <div className="flex size-10 items-center justify-center rounded-full bg-primary/10 text-primary">
-                    <span className="material-symbols-outlined">location_on</span>
-                  </div>
-                  <div className="flex flex-col">
-                    <h3 className="font-bold text-slate-800">Address</h3>
-                    <p className="text-slate-500">123 Engineering Lane<br/>San Francisco, CA 94105</p>
-                  </div>
+                <div className="flex justify-end">
+                    <button
+                    type="submit"
+                    className="rounded-md bg-indigo-600 px-3.5 py-2.5 text-center text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                    >
+                    Send Message
+                    </button>
                 </div>
-              </div>
+                </form>
+            </div>
+
+            {/* Contact Info */}
+            <div className="w-full flex items-center">
+                 <div className="space-y-8">
+                    <div className="flex items-start gap-4">
+                        <div className="flex size-10 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                            <span className="material-symbols-outlined">mail</span>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900">Email</h3>
+                            <p className="mt-1 text-gray-600">contact@sftechprojects.com</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                        <div className="flex size-10 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                            <span className="material-symbols-outlined">call</span>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900">Phone</h3>
+                            <p className="mt-1 text-gray-600">(123) 456-7890</p>
+                        </div>
+                    </div>
+                    <div className="flex items-start gap-4">
+                        <div className="flex size-10 items-center justify-center rounded-lg bg-indigo-600 text-white">
+                            <span className="material-symbols-outlined">location_on</span>
+                        </div>
+                        <div>
+                            <h3 className="text-lg font-semibold text-gray-900">Address</h3>
+                            <p className="mt-1 text-gray-600">123 Engineering Lane<br/>San Francisco, CA 94105</p>
+                        </div>
+                    </div>
+                </div>
             </div>
           </div>
         </div>
