@@ -1,44 +1,8 @@
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-
-const quoteRequestsData = [
-  {
-    name: 'Jane Cooper',
-    email: 'jane.cooper@example.com',
-    serviceCategory: 'Structural Engineering',
-    dateReceived: '2023-10-26',
-    status: 'Completed',
-  },
-  {
-    name: 'Cody Fisher',
-    email: 'cody.fisher@example.com',
-    serviceCategory: 'MEP Design',
-    dateReceived: '2023-10-25',
-    status: 'In Progress',
-  },
-  {
-    name: 'Esther Howard',
-    email: 'esther.howard@example.com',
-    serviceCategory: 'Civil Engineering',
-    dateReceived: '2023-10-24',
-    status: 'New',
-  },
-  {
-    name: 'Jenny Wilson',
-    email: 'jenny.wilson@example.com',
-    serviceCategory: 'Geotechnical Services',
-    dateReceived: '2023-10-23',
-    status: 'New',
-  },
-  {
-    name: 'Kristin Watson',
-    email: 'kristin.watson@example.com',
-    serviceCategory: 'Construction Management',
-    dateReceived: '2023-10-22',
-    status: 'New',
-  },
-];
+import { db } from '../firebase';
+import { collection, query, orderBy, onSnapshot } from 'firebase/firestore';
 
 const StatusBadge = ({ status }) => {
   let badgeStyle = '';
@@ -50,20 +14,52 @@ const StatusBadge = ({ status }) => {
       badgeStyle = 'bg-yellow-100 text-yellow-800';
       break;
     case 'New':
-      badgeStyle = 'bg-blue-100 text-blue-800';
-      break;
     default:
-      badgeStyle = 'bg-gray-100 text-gray-800';
+      badgeStyle = 'bg-blue-100 text-blue-800';
   }
   return (
     <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${badgeStyle}`}>
-      {status}
+      {status || 'New'}
     </span>
   );
 };
 
 const AdminDashboard = () => {
   const [activeTab, setActiveTab] = useState('quotes');
+  const [quoteRequests, setQuoteRequests] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    if (activeTab === 'quotes') {
+      setLoading(true);
+      // Query to get quote requests, ordered by creation date
+      const q = query(collection(db, 'quoteRequests'), orderBy('createdAt', 'desc'));
+
+      // onSnapshot listens for real-time updates
+      const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        const requestsData = [];
+        querySnapshot.forEach((doc) => {
+          requestsData.push({ id: doc.id, ...doc.data() });
+        });
+        setQuoteRequests(requestsData);
+        setLoading(false);
+      }, (error) => {
+        console.error("Error fetching quote requests: ", error);
+        setLoading(false);
+      });
+
+      // Cleanup subscription on component unmount
+      return () => unsubscribe();
+    }
+  }, [activeTab]);
+
+  // Filter requests based on search term
+  const filteredRequests = quoteRequests.filter(request =>
+    (request.name && request.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (request.email && request.email.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (request.serviceCategory && request.serviceCategory.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
 
   return (
     <div className="bg-slate-50 min-h-screen">
@@ -111,6 +107,8 @@ const AdminDashboard = () => {
                     type="text"
                     placeholder="Search by name, email, or service..."
                     className="block w-full bg-white border border-slate-300 rounded-md py-3 pl-10 pr-3 text-sm placeholder-slate-400 focus:outline-none focus:ring-1 focus:ring-primary focus:border-primary"
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
                 />
             </div>
         </div>
@@ -136,20 +134,28 @@ const AdminDashboard = () => {
                     </tr>
                   </thead>
                   <tbody className="bg-white divide-y divide-slate-200">
-                    {quoteRequestsData.map((request) => (
-                      <tr key={request.email}>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{request.name}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{request.email}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{request.serviceCategory}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{request.dateReceived}</td>
-                        <td className="px-6 py-4 whitespace-nowrap text-sm">
-                          <StatusBadge status={request.status} />
-                        </td>
-                        <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                          <Link to="#" className="text-primary hover:text-primary-dark">View Details</Link>
-                        </td>
-                      </tr>
-                    ))}
+                    {loading ? (
+                        <tr><td colSpan="6" className="text-center py-8 text-slate-500">Loading requests...</td></tr>
+                    ) : filteredRequests.length > 0 ? (
+                      filteredRequests.map((request) => (
+                        <tr key={request.id}>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{request.name}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{request.email}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{request.serviceCategory}</td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm text-slate-500">
+                            {request.createdAt ? request.createdAt.toDate().toLocaleDateString() : 'N/A'}
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-sm">
+                            <StatusBadge status={request.status} />
+                          </td>
+                          <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                            <Link to={`/admin/quote/${request.id}`} className="text-primary hover:text-primary-dark">View Details</Link>
+                          </td>
+                        </tr>
+                      ))
+                    ) : (
+                        <tr><td colSpan="6" className="text-center py-8 text-slate-500">No quote requests found.</td></tr>
+                    )}
                   </tbody>
                 </table>
               </div>
