@@ -106,20 +106,22 @@ const QuoteRequestsTable = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Files</th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+              <th className="relative px-6 py-3">
+                <span className="sr-only">View</span>
+              </th>
             </tr>
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {filteredRequests.map(request => (
-              <tr key={request.id}>
+              <tr key={request.id} onClick={() => handleViewDetails(request.id)} className="hover:bg-gray-50 cursor-pointer">
                 <td className="px-6 py-4 whitespace-nowrap">{request.name}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{request.email}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{request.serviceCategory}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{truncate(request.description, 80)}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{formatDate(request.createdAt)}</td>
-                <td className="px-6 py-4 whitespace-nowrap">{request.fileUrls ? request.fileUrls.length : 0} files</td>
-                <td className="px-6 py-4 whitespace-nowrap">
-                  <button onClick={() => handleViewDetails(request.id)} className="text-indigo-600 hover:text-indigo-900">View</button>
+                <td className="px-6 py-4 whitespace-nowrap">{request.attachments ? request.attachments.length : 0} files</td>
+                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                  <span className="text-indigo-600 hover:text-indigo-900">View</span>
                 </td>
               </tr>
             ))}

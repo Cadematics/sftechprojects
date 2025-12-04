@@ -1,4 +1,3 @@
-
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
@@ -20,7 +19,7 @@ import Terms from './pages/Terms';
 import Careers from './pages/Careers';
 import Navbar from './components/Navbar';
 import Admin from './pages/Admin';
-import QuoteDetail from './pages/QuoteDetail'; // Import the new component
+import AdminQuoteDetail from './pages/AdminQuoteDetail';
 
 function App() {
   return (
@@ -39,7 +38,7 @@ function App() {
           <Route path="/terms" element={<Terms />} />
           <Route path="/careers" element={<Careers />} />
           <Route path="/admin" element={<Admin />} />
-          <Route path="/admin/quote/:id" element={<QuoteDetail />} /> {/* Add the new route */}
+          <Route path="/admin/quote/:id" element={<AdminQuoteDetail />} />
           <Route path="/services/cad-engineering" element={<Service_CADEngineering />} />
           <Route path="/services/laser-cutting" element={<Service_LaserCutting />} />
           <Route path="/services/product-development" element={<Service_ProductDevelopment />} />
