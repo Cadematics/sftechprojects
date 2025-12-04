@@ -1,5 +1,7 @@
 {
   "projects": {
     "default": "sftechprojects-185eb"
-  }
+  },
+  "targets": {},
+  "etags": {}
 }

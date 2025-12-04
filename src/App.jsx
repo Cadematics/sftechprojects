@@ -18,7 +18,8 @@ import Projects from './pages/Projects';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
 import Careers from './pages/Careers';
-import Navbar from './components/Navbar'
+import Navbar from './components/Navbar';
+import Admin from './pages/Admin';
 
 function App() {
   return (
@@ -36,6 +37,7 @@ function App() {
           <Route path="/privacy" element={<Privacy />} />
           <Route path="/terms" element={<Terms />} />
           <Route path="/careers" element={<Careers />} />
+          <Route path="/admin" element={<Admin />} />
           <Route path="/services/cad-engineering" element={<Service_CADEngineering />} />
           <Route path="/services/laser-cutting" element={<Service_LaserCutting />} />
           <Route path="/services/product-development" element={<Service_ProductDevelopment />} />
