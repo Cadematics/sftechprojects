@@ -2,39 +2,32 @@
 
 ## Overview
 
-This document outlines the structure and development plan for the SFTechProjects professional engineering services website.
+This document outlines the architecture, features, and design of the React application. It serves as a single source of truth for the project's current state and future development plans.
 
 ## Implemented Features
 
-*   **Firebase Integration:** The project is configured for Firebase Hosting, Firestore, and Storage.
-*   **Initial React Setup:** A basic React application was initialized using Vite.
-*   **Navigation and Routing:** A responsive navigation bar and client-side routing are implemented using `react-router-dom`.
-*   **Page Structure:** The basic page structure for the main sections of the website has been created.
-*   **Service Pages:** Detailed pages for each of the company's services have been created.
-    *   **Product Development:** A comprehensive page detailing the product development services offered.
-    *   **CAD Engineering:** A page outlining the company's CAD engineering capabilities.
-    *   **Laser Cutting:** A page dedicated to the laser cutting services provided.
-    *   **Web Development:** A page showcasing the web development services available.
-    *   **3D Visualization:** A page highlighting the 3D visualization and rendering services.
+### Firebase Integration
 
-## Development Plan
+- **Firebase Core:** The project is initialized with Firebase, including Firestore, Storage, and Authentication.
+- **Firestore:** The application uses Firestore as its primary database.
+- **Storage:** The application integrates with Firebase Storage for file uploads and management.
+- **Authentication:** The application uses Firebase Authentication for user management.
 
-### Phase 1: Navigation and Page Structure (Completed)
+### Storage Test Page (`/test-storage`)
 
-The goal of this phase was to establish the basic navigation and page structure of the application. All steps in this phase have been completed.
+- **Purpose:** A dedicated page for debugging and testing Firebase Storage functionality.
+- **Features:**
+    - **File Upload:** Users can select and upload files to the Firebase Storage bucket.
+    - **File List:** The page lists all files available at the specified storage location.
+    - **Debug Log:** A real-time log displays messages for all storage operations, including uploads, listings, and errors.
+    - **Error Handling:** The page provides specific error messages for failed storage operations.
+- **Configuration:** The page is currently configured to list files from the root of the Firebase Storage bucket.
 
-### Phase 2: Service Page Implementation (Completed)
+## Current Plan
 
-The goal of this phase was to create detailed pages for each of the company's services.
-
-**Steps:**
-
-1.  **Create individual service pages:** Design and implement a unique page for each of the following services:
-    *   Product Development
-    *   CAD Engineering
-    *   Laser Cutting
-    *   Web Development
-    *   3D Visualization
-2.  **Add content and imagery:** Populate each service page with detailed descriptions, images, and a clear call-to-action.
-3.  **Link from the main services page:** Update the main services page to include links to each of the individual service pages.
-4.  **Style the service pages:** Create and apply CSS to ensure a consistent and professional look and feel across all service pages.
+- **Objective:** Ensure the `/test-storage` page correctly lists all files from the root of the Firebase Storage bucket.
+- **Steps:**
+    1.  **Identify the issue:** The user reported that a manually uploaded file was not appearing on the `/test-storage` page.
+    2.  **Investigate:** I examined the `firebase.js` configuration file and found that the `storageBucket` was pointing to an incorrect domain.
+    3.  **Correct the configuration:** I updated the `storageBucket` in `firebase.js` to the correct domain (`sftechprojects-185eb.firebasestorage.app`).
+    4.  **Verify:** I have asked the user to refresh the `/test-storage` page to confirm that the issue is resolved.

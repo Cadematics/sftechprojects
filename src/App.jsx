@@ -20,6 +20,7 @@ import Careers from './pages/Careers';
 import Navbar from './components/Navbar';
 import Admin from './pages/Admin';
 import AdminQuoteDetail from './pages/AdminQuoteDetail';
+import StorageTestPage from './pages/StorageTestPage';
 
 function App() {
   return (
@@ -45,6 +46,7 @@ function App() {
           <Route path="/services/web-development" element={<Service_WebDevelopment />} />
           <Route path="/services/3d-visualization" element={<Service_3DVisualization />} />
           <Route path="/services/3d-printing" element={<Service_3DPrinting />} />
+          <Route path="/test-storage" element={<StorageTestPage />} />
         </Routes>
         <Footer />
       </div>

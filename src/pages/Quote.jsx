@@ -1,26 +1,7 @@
-
 import React, { useState } from 'react';
-import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
-import { db } from '../firebase';
-
-// Helper function to convert a file to a Base64 string
-const readFileAsBase64 = (file) => {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onload = () => {
-      resolve({
-        name: file.name,
-        type: file.type,
-        size: file.size,
-        data: reader.result, // This is the Base64 string
-      });
-    };
-    reader.onerror = (error) => {
-      reject(error);
-    };
-    reader.readAsDataURL(file);
-  });
-};
+import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { db, storage } from '../firebase';
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
 const Quote = () => {
   const [formData, setFormData] = useState({
@@ -32,6 +13,7 @@ const Quote = () => {
   const [files, setFiles] = useState([]);
   const [status, setStatus] = useState('new'); // new, submitting, success, error
   const [error, setError] = useState(null);
+  const [debugUrl, setDebugUrl] = useState(''); // New state for the debug URL
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -40,47 +22,110 @@ const Quote = () => {
 
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
-    console.log("Files selected:", selectedFiles);
     setFiles(selectedFiles);
+  };
+
+  const handleTestUpload = async () => {
+    setDebugUrl('Testing...');
+    setError(null);
+    try {
+      // 1. Create dummy Firestore document
+      console.log("RequestQuote (Debug): Creating test document...");
+      const docRef = await addDoc(collection(db, 'quoteRequests'), {
+        name: "Storage Test",
+        email: "storage@test.local",
+        serviceCategory: "Test",
+        description: "Testing Storage upload",
+        createdAt: serverTimestamp(),
+        status: "test",
+        fileUrls: [],
+      });
+      console.log(`RequestQuote (Debug): Test document created with ID = ${docRef.id}`);
+
+      // 2. Upload dummy file
+      console.log("RequestQuote (Debug): Uploading test file...");
+      const dummyFile = new Blob(['Hello from debug upload'], { type: 'text/plain' });
+      const storageRef = ref(storage, `quoteRequests/${docRef.id}/uploads/debug.txt`);
+      await uploadBytes(storageRef, dummyFile);
+       console.log("RequestQuote (Debug): Test file uploaded successfully.");
+
+      // 3. Get download URL
+      console.log("RequestQuote (Debug): Getting download URL...");
+      const downloadURL = await getDownloadURL(storageRef);
+      console.log(`RequestQuote (Debug): Got download URL: ${downloadURL}`);
+
+      // 4. Save URL to Firestore
+      console.log("RequestQuote (Debug): Updating test document with URL...");
+      await updateDoc(docRef, {
+        fileUrls: [downloadURL],
+      });
+      console.log("RequestQuote (Debug): Test document updated.");
+
+      // 5. Display URL
+      setDebugUrl(downloadURL);
+    } catch (error) {
+      console.error('RequestQuote (Debug) ERROR:', error);
+      const errorMessage = `Debug Error: ${error.message}`;
+      setError(errorMessage);
+      setDebugUrl('');
+      setStatus('error');
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submission started.");
+    setStatus('submitting');
     setError(null);
 
     if (formData.name === '' || formData.email === '' || formData.description === '') {
-      console.log("Validation failed: Required fields are empty.");
-      setError('Please fill out all required fields.');
+      const errorMessage = 'Please fill out all required fields.';
+      console.error(`RequestQuote ERROR: ${errorMessage}`);
+      setError(errorMessage);
       setStatus('error');
       return;
     }
-    setStatus('submitting');
-    console.log("Status set to submitting. Form data:", formData);
+
+    let docRef;
 
     try {
-      // 1. Convert files to Base64
-      let attachments = [];
-      if (files.length > 0) {
-        console.log(`Attempting to convert ${files.length} files...`);
-        attachments = await Promise.all(files.map(readFileAsBase64));
-        console.log("Files converted to Base64 successfully.");
-      } else {
-        console.log("No files to attach.");
-      }
-
-      // 2. Create the document in Firestore, now with the file data included
-      console.log("Attempting to create document in Firestore with attachments...");
-      const docRef = await addDoc(collection(db, 'quoteRequests'), {
+      console.log("RequestQuote: Creating Firestore document...");
+      docRef = await addDoc(collection(db, 'quoteRequests'), {
         ...formData,
         createdAt: serverTimestamp(),
         status: 'new',
-        attachments: attachments, // Save the array of file objects
+        fileUrls: [],
       });
-      console.log("Document created successfully in Firestore. Doc ID:", docRef.id);
+      console.log(`RequestQuote: Document created with ID = ${docRef.id}`);
 
-      // 3. Success - No more interaction with Firebase Storage is needed.
-      console.log("Quote submission process successful.");
+      const fileUrls = [];
+      const uploadPromises = files.map(async (file) => {
+        const storageRef = ref(storage, `quoteRequests/${docRef.id}/uploads/${file.name}`);
+        let downloadURL;
+
+        try {
+          console.log(`RequestQuote: Uploading file ${file.name}...`);
+          await uploadBytes(storageRef, file);
+          console.log(`RequestQuote: Upload success for ${file.name}`);
+
+          console.log(`RequestQuote: Getting download URL for ${file.name}`);
+          downloadURL = await getDownloadURL(storageRef);
+          fileUrls.push(downloadURL);
+          console.log(`RequestQuote: URL for ${file.name} is ${downloadURL}`);
+        } catch (uploadError) {
+            const errorMessage = `Failed to upload ${file.name}: ${uploadError.message}`;
+            console.error(`RequestQuote ERROR: ${errorMessage}`);
+            throw new Error('There was a problem uploading your files. Please try again or contact support.');
+        }
+      });
+
+      await Promise.all(uploadPromises);
+      console.log("RequestQuote: All uploads completed");
+
+      if (fileUrls.length > 0) {
+        console.log("RequestQuote: Updating Firestore document with all file URLs...");
+        await updateDoc(docRef, { fileUrls: fileUrls });
+      }
+
       setStatus('success');
       setFormData({
         name: '',
@@ -89,12 +134,15 @@ const Quote = () => {
         description: '',
       });
       setFiles([]);
+
     } catch (err) {
-      console.error("Detailed error during quote submission:", err);
-      setError(`An error occurred: ${err.message}. Check the console for details.`);
-      setStatus('error');
+        const finalErrorMessage = err.message || 'An unexpected error occurred.';
+        console.error(`RequestQuote ERROR: ${finalErrorMessage}`);
+        setError(finalErrorMessage);
+        setStatus('error');
     }
   };
+
 
   return (
     <div className="bg-slate-50 py-16 sm:py-24">
@@ -226,10 +274,43 @@ const Quote = () => {
             </div>
 
             <div className="mt-10 pt-8 border-t border-slate-900/10">
+                <div className="mb-4 p-4 border border-dashed border-yellow-500 rounded-md">
+                    <div className="flex items-center justify-between gap-x-6 ">
+                        <button
+                            type="button"
+                            onClick={handleTestUpload}
+                            className="rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
+                        >
+                            Test Storage Upload
+                        </button>
+                        {debugUrl && (
+                            <div className="text-sm overflow-x-auto">
+                                <strong>Debug URL:</strong> <a href={debugUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 break-all">{debugUrl}</a>
+                            </div>
+                        )}
+                    </div>
+                </div>
+
+                {status === 'success' && (
+                    <div className="mb-4 rounded-md bg-green-50 p-4">
+                        <div className="flex">
+                            <div className="ml-3">
+                                <p className="text-sm font-medium text-green-800">Thank you! Your quote request has been submitted.</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
+                {status === 'error' && error && (
+                    <div className="mb-4 rounded-md bg-red-50 p-4">
+                        <div className="flex">
+                            <div className="ml-3">
+                                <p className="text-sm font-medium text-red-800">{error}</p>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <div className="flex items-center justify-end gap-x-6">
                     {status === 'submitting' && <p className="text-slate-500">Submitting...</p>}
-                    {status === 'success' && <p className="text-green-500">Request submitted successfully!</p>}
-                    {status === 'error' && <p className="text-red-500">{error || 'An unexpected error occurred. Please try again.'}</p>}
                     <button
                         type="submit"
                         disabled={status === 'submitting'}

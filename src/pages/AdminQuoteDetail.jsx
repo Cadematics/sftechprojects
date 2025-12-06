@@ -43,12 +43,6 @@ const AdminQuoteDetail = () => {
     }
   };
 
-  const getFileExtension = (fileName) => {
-    if (!fileName || fileName === 'unknown file') return 'unknown';
-    const parts = fileName.split('.');
-    return parts.length > 1 ? parts.pop() : '';
-  };
-
 
   if (!quoteRequest) {
     return <div>Loading...</div>;
@@ -58,6 +52,10 @@ const AdminQuoteDetail = () => {
     if (!timestamp) return 'N/A';
     return new Date(timestamp.seconds * 1000).toLocaleString();
   };
+
+  const attachments = quoteRequest.attachments || [];
+  const fileUrls = quoteRequest.fileUrls || [];
+  const allFiles = [...attachments, ...fileUrls];
 
   return (
     <div className="min-h-screen bg-gray-100 p-8">
@@ -81,18 +79,18 @@ const AdminQuoteDetail = () => {
 
             <div className="mb-6">
                 <h2 className="text-xl font-semibold mb-2">Files</h2>
-                {quoteRequest.attachments && quoteRequest.attachments.length > 0 ? (
+                {allFiles.length > 0 ? (
                     <ul className="border border-gray-200 rounded-md divide-y divide-gray-200">
-                        {quoteRequest.attachments.map((url, index) => {
-                            const fileName = getFileName(url);
-                            const fileExtension = getFileExtension(fileName);
+                        {allFiles.map((url, index) => {
+                            const fileName = typeof url === 'string' ? getFileName(url) : url.name;
+                            const downloadUrl = typeof url === 'string' ? url : url.data;
                             return (
                                 <li key={index} className="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
                                     <div className="w-0 flex-1 flex items-center">
-                                    <span className="ml-2 flex-1 w-0 truncate">{fileName} ({fileExtension})</span>
+                                    <span className="ml-2 flex-1 w-0 truncate">{fileName}</span>
                                     </div>
                                     <div className="ml-4 flex-shrink-0">
-                                    <a href={url} download={fileName} target="_blank" rel="noopener noreferrer" className="font-medium text-indigo-600 hover:text-indigo-900">
+                                    <a href={downloadUrl} download={fileName} target="_blank" rel="noopener noreferrer" className="font-medium text-indigo-600 hover:text-indigo-900">
                                         Download
                                     </a>
                                     </div>
@@ -106,12 +104,13 @@ const AdminQuoteDetail = () => {
             </div>
 
             <div>
-                <h2 className="text-xl font-semibold mb-2">Update Status</h2>
+                <h2 className="text-xl font-semibold mb-2">Status</h2>
                 <div className="flex items-center">
                     <select value={status} onChange={(e) => setStatus(e.target.value)} className="p-2 border rounded-md">
                         <option value="new">New</option>
-                        <option value="in-progress">In Progress</option>
+                        <option value="in-review">In Review</option>
                         <option value="completed">Completed</option>
+                        <option value="archived">Archived</option>
                     </select>
                     <button onClick={handleStatusUpdate} className="ml-4 px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700">
                         Update Status

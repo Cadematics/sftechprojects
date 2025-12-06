@@ -61,8 +61,14 @@ const QuoteRequestsTable = () => {
     return new Date(timestamp.seconds * 1000).toLocaleDateString();
   };
   
-  // Get unique service categories for the filter dropdown
   const serviceCategories = [...new Set(quoteRequests.map(req => req.serviceCategory))];
+
+  const statusColors = {
+    new: 'bg-blue-200 text-blue-800',
+    'in-review': 'bg-yellow-200 text-yellow-800',
+    completed: 'bg-green-200 text-green-800',
+    archived: 'bg-gray-200 text-gray-800',
+  };
 
 
   return (
@@ -91,8 +97,9 @@ const QuoteRequestsTable = () => {
         >
             <option value="">All Statuses</option>
             <option value="new">New</option>
-            <option value="in-progress">In Progress</option>
+            <option value="in-review">In Review</option>
             <option value="completed">Completed</option>
+            <option value="archived">Archived</option>
         </select>
 
       </div>
@@ -106,6 +113,7 @@ const QuoteRequestsTable = () => {
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Description</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
               <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Files</th>
+              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
               <th className="relative px-6 py-3">
                 <span className="sr-only">View</span>
               </th>
@@ -120,6 +128,11 @@ const QuoteRequestsTable = () => {
                 <td className="px-6 py-4 whitespace-nowrap">{truncate(request.description, 80)}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{formatDate(request.createdAt)}</td>
                 <td className="px-6 py-4 whitespace-nowrap">{request.attachments ? request.attachments.length : 0} files</td>
+                <td className="px-6 py-4 whitespace-nowrap">
+                  <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full ${statusColors[request.status] || 'bg-gray-200 text-gray-800'}`}>
+                    {request.status}
+                  </span>
+                </td>
                 <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                   <span className="text-indigo-600 hover:text-indigo-900">View</span>
                 </td>
