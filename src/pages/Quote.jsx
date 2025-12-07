@@ -274,7 +274,7 @@ const Quote = () => {
             </div>
 
             <div className="mt-10 pt-8 border-t border-slate-900/10">
-                <div className="mb-4 p-4 border border-dashed border-yellow-500 rounded-md">
+                {/* <div className="mb-4 p-4 border border-dashed border-yellow-500 rounded-md">
                     <div className="flex items-center justify-between gap-x-6 ">
                         <button
                             type="button"
@@ -308,7 +308,7 @@ const Quote = () => {
                             </div>
                         </div>
                     </div>
-                )}
+                )} */}
                 <div className="flex items-center justify-end gap-x-6">
                     {status === 'submitting' && <p className="text-slate-500">Submitting...</p>}
                     <button
