@@ -21,10 +21,12 @@ import Navbar from './components/Navbar';
 import Admin from './pages/Admin';
 import AdminQuoteDetail from './pages/AdminQuoteDetail';
 import StorageTestPage from './pages/StorageTestPage';
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <div className="bg-background-light font-display text-slate-800">
         {/* <Header /> */}
         <Navbar />

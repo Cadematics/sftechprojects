@@ -144,7 +144,7 @@ const Services = () => {
                   Let's discuss how SFTechProjects can bring your ideas to life. Contact us today for a free consultation.
                 </p>
                 <div className="mt-8 flex justify-center">
-                    <Link to="/contact" className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
+                    <Link to="/quote" className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">
                         <span>Request a Quote</span>
                     </Link>
                 </div>
