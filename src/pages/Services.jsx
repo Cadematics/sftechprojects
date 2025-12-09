@@ -103,7 +103,7 @@ const Services = () => {
             <div className="mx-auto max-w-3xl text-center">
               <h1 className="text-white text-4xl font-bold tracking-tight sm:text-5xl md:text-6xl">Our Services</h1>
               <h2 className="mt-6 text-slate-300 dark:text-slate-400 text-lg leading-relaxed">
-                SFTechProjects is your partner in turning complex ideas into tangible products through a comprehensive range of expert engineering and prototyping services.
+                BayLabTech is your partner in turning complex ideas into tangible products through a comprehensive range of expert engineering and prototyping services.
               </h2>
             </div>
           </div>
@@ -141,7 +141,7 @@ const Services = () => {
               <div className="mx-auto max-w-2xl">
                 <h2 className="text-3xl font-bold tracking-tight text-white sm:text-4xl">Ready to Start Your Project?</h2>
                 <p className="mt-4 text-lg leading-8 text-slate-300">
-                  Let's discuss how SFTechProjects can bring your ideas to life. Contact us today for a free consultation.
+                  Let's discuss how BayLabTech can bring your ideas to life. Contact us today for a free consultation.
                 </p>
                 <div className="mt-8 flex justify-center">
                     <Link to="/quote" className="flex min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-12 px-6 bg-primary text-white text-base font-bold shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary">

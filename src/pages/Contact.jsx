@@ -78,7 +78,7 @@ const Contact = () => {
                         </div>
                         <div>
                             <h3 className="text-lg font-semibold text-gray-900">Email</h3>
-                            <p className="mt-1 text-gray-600">contact@sftechprojects.com</p>
+                            <p className="mt-1 text-gray-600">contact@baylabtech.com</p>
                         </div>
                     </div>
                     <div className="flex items-start gap-4">

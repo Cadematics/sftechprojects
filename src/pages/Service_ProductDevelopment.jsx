@@ -40,7 +40,7 @@ const Service_ProductDevelopment = () => {
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Overview</h2>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              SFTechProjects delivers comprehensive product development services, from initial concept generation to final prototype fabrication. Our team of experienced engineers utilizes cutting-edge technology to ensure your vision becomes a market-ready reality, focusing on efficiency, reliability, and precision.
+              BayLabTech delivers comprehensive product development services, from initial concept generation to final prototype fabrication. Our team of experienced engineers utilizes cutting-edge technology to ensure your vision becomes a market-ready reality, focusing on efficiency, reliability, and precision.
             </p>
           </div>
         </div>

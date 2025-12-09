@@ -11,8 +11,8 @@ const Navbar = () => {
       <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 md:px-10">
         <div className="flex items-center justify-between h-16">
           <Link to="/" className="flex items-center gap-4 text-slate-900 dark:text-slate-50">
-            <img src={logo} alt="SFTechProjects Logo" className="h-8 w-auto" />
-            <span className="text-lg font-bold leading-tight tracking-[-0.015em]">SFTechProjects</span>
+            <img src={logo} alt="BayLabTech Logo" className="h-8 w-auto" />
+            <span className="text-lg font-bold leading-tight tracking-[-0.015em]">BayLabTech</span>
           </Link>
           <div className="hidden md:flex items-center gap-8">
             <Link to="/" className="text-slate-900 dark:text-slate-50 text-sm font-medium leading-normal">Home</Link>
