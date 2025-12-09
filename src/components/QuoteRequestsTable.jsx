@@ -9,17 +9,27 @@ const QuoteRequestsTable = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [serviceFilter, setServiceFilter] = useState('');
   const [statusFilter, setStatusFilter] = useState('');
+  const [error, setError] = useState(null); // For error handling
   const navigate = useNavigate();
 
   useEffect(() => {
+    console.log("Admin: Starting to fetch quoteRequests...");
+    setError(null);
+
     const q = query(collection(db, 'quoteRequests'), orderBy('createdAt', 'desc'));
+    
     const unsubscribe = onSnapshot(q, (querySnapshot) => {
+      console.log("Admin: Query executed.");
       const requests = querySnapshot.docs.map(doc => ({
         id: doc.id,
         ...doc.data()
       }));
+      console.log(`Admin: Received ${requests.length} documents.`);
       setQuoteRequests(requests);
       setFilteredRequests(requests);
+    }, (err) => {
+      console.error("Admin: Query error:", err);
+      setError(`Failed to fetch quote requests: ${err.message}`);
     });
 
     return () => unsubscribe();
@@ -73,6 +83,12 @@ const QuoteRequestsTable = () => {
 
   return (
     <div className="bg-white shadow rounded-lg p-5">
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+          <strong className="font-bold">Error: </strong>
+          <span className="block sm:inline">{error}</span>
+        </div>
+      )}
       <div className="mb-4 grid grid-cols-1 md:grid-cols-3 gap-4">
         <input
           type="text"

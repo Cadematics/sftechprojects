@@ -1,157 +1,131 @@
-
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { FaUsers, FaLightbulb, FaRocket } from 'react-icons/fa';
 
-const About = () => {
+const AboutPage = () => {
+  const teamMembers = [
+    {
+      name: 'Alex Chen',
+      role: 'Founder & CEO',
+      imageUrl: 'https://images.unsplash.com/photo-1599566150163-29194dcaad36?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+    {
+      name: 'Maya Rodriguez',
+      role: 'Head of Product Development',
+      imageUrl: 'https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=2861&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+    {
+        name: 'David Lee',
+        role: 'Lead Fabrication Specialist',
+        imageUrl: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=2787&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+    {
+      name: 'Sophia Dubois',
+      role: 'Creative Director',
+      imageUrl: 'https://images.unsplash.com/photo-1619895862022-09114b41f16f?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+    },
+  ];
+
   return (
-    <div className="font-display bg-background-light dark:bg-background-dark text-slate-800 dark:text-slate-200">
-      <main className="flex-1">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-24">
-          <div className="max-w-4xl mx-auto flex flex-col gap-16 sm:gap-24">
-            <div className="flex flex-col gap-4 text-center">
-              <h1 className="bg-blue-800 dark:bg-red text-4xl md:text-5xl font-black tracking-tighter ">About BayLabTech</h1>
-              <p className="text-slate-600 dark:text-slate-400 text-lg md:text-xl font-normal max-w-3xl mx-auto">Innovating the Future of Engineering and Prototyping</p>
-            </div>
-
-            <section className="flex flex-col gap-8">
-              <div className="flex flex-col gap-4 text-center">
-                <h2 className="text-Blue-800 dark:text-primary text-3xl font-bold tracking-tight">OOur Mission & Vision</h2>
-                <p className="text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed max-w-3xl mx-auto">BayLabTech is a leading professional engineering services firm dedicated to pushing the boundaries of innovation. Our mission is to provide cutting-edge solutions in prototyping and digital fabrication, turning complex ideas into tangible realities. We are committed to excellence, precision, and collaborative partnerships to drive the future of technology.</p>
-              </div>
-              <div className="w-full aspect-video rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
-                <img alt="A modern engineering workshop with 3D printers and CNC machines in operation." className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQzyGdIwMGn2pMTLfbcrP3opJp7HqLbI62y3Hhb___clPIr6lbS52MFYdqGKQiCHrP-6NoqqSyATZ44b5o90tOyEXw1M9duDmMShzKUjLrHISCFi7iBfSSVncvNpV3VToYBvTife89zrNjGiSydmXOmyoss25X9tAtpDp1t1-KhTcAcPIeGIpHgqS0xIkGaneq3yU8DzIeQRrS2spPyPk3MUyJ8s0mbnD8rZr9rjMiK2mj1THBHZ5KqwuvKvbOL4kfmjess3elIM"/>
-              </div>
-            </section>
-
-            <section className="flex flex-col gap-8">
-              <div className="text-center">
-                <h2 className="text-slate-900 dark:text-slate-50 text-3xl font-bold tracking-tight">The Journey So Far</h2>
-              </div>
-              <div className="prose prose-slate dark:prose-invert max-w-none text-slate-600 dark:text-slate-400 text-base font-normal leading-relaxed">
-                <p>Founded by a group of passionate engineers, BayLabTech began with a simple goal: to make advanced manufacturing and prototyping accessible to innovators everywhere. From our humble beginnings in a small workshop, we've grown into a trusted partner for startups and established companies alike, consistently delivering high-quality results and pushing the envelope of what's possible.</p>
-                <img alt="A close-up shot of a complex mechanical prototype assembly." className="rounded-xl w-1/3 float-right ml-6 mb-4" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPmJZXlyzUAPmrpKcmvuT6M6U38yRsSmm5CpYcNiDWWIXrsayHZLDIj89S_uXwwTI_J8WYFipSPJQtngAUjhlHVq0xXgHz593moRVpY6nnmb0ShP2uuwr5PkrCaaTOF0zd4McTZfwmuP6jq1kR8E06ubTi5ObC6ODgDNAt3ELNazTggdeQbgwm-Tb46UAV28AbmBCBbDa9THQwSlNJaOnKoWTxfx7-oyDcxaXTIIJC6fqU0GcgA6LKUw93-A9IXLf1grHzmmmgc0Q"/>
-                <p>Our journey has been one of continuous learning and adaptation. We've embraced new technologies, from the latest in 3D printing to advanced CNC machining, always with the aim of providing more value to our clients. Each project is a new chapter in our story, a testament to the power of collaboration and the relentless pursuit of perfection. We believe that the best products are born from a blend of creative vision and engineering rigor, and that's the principle we bring to every challenge.</p>
-                <p>Looking ahead, we are excited to continue exploring the frontiers of technology, helping to build a future where any idea, no matter how ambitious, can be brought to life.</p>
-              </div>
-            </section>
-
-            <section className="flex flex-col gap-8 items-center">
-              <div className="text-center">
-                <h2 className="text-slate-900 dark:text-slate-50 text-3xl font-bold tracking-tight">What Drives Us</h2>
-                <p className="text-slate-600 dark:text-slate-400 text-lg mt-2">Our core values are the foundation of everything we do.</p>
-              </div>
-              <div className="w-full grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
-                <div className="flex flex-col items-center text-center p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center justify-center size-12 rounded-full bg-primary/10 text-primary mb-4">
-                    <span className="material-symbols-outlined text-3xl">lightbulb</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Innovation</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">We constantly explore new technologies and methods to deliver creative and effective solutions.</p>
-                </div>
-                <div className="flex flex-col items-center text-center p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center justify-center size-12 rounded-full bg-primary/10 text-primary mb-4">
-                    <span className="material-symbols-outlined text-3xl">straighten</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Precision</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Meticulous attention to detail ensures the highest quality and accuracy in every project.</p>
-                </div>
-                <div className="flex flex-col items-center text-center p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center justify-center size-12 rounded-full bg-primary/10 text-primary mb-4">
-                    <span className="material-symbols-outlined text-3xl">groups</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Collaboration</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">We work closely with our clients as a true partner to achieve shared goals and success.</p>
-                </div>
-                <div className="flex flex-col items-center text-center p-6 bg-white dark:bg-slate-900/50 rounded-xl border border-slate-200 dark:border-slate-800">
-                  <div className="flex items-center justify-center size-12 rounded-full bg-primary/10 text-primary mb-4">
-                    <span className="material-symbols-outlined text-3xl">verified_user</span>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Customer Success</h3>
-                  <p className="text-sm text-slate-600 dark:text-slate-400 mt-1">Your success is our ultimate metric. We are committed to delivering results that matter.</p>
-                </div>
-              </div>
-            </section>
-
-            <section className="flex flex-col gap-8 items-center">
-              <div className="text-center">
-                <h2 className="text-slate-900 dark:text-slate-50 text-3xl font-bold tracking-tight">Meet Our Experts</h2>
-                <p className="text-slate-600 dark:text-slate-400 text-lg mt-2">The brilliant minds behind our innovative solutions.</p>
-              </div>
-              <div className="w-full grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-full aspect-square rounded-full overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800">
-                    <img alt="Headshot of Jane Doe, CEO" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPFrvpWVrHL3G3YYUcxXX5JN_2zszhXJMM2rV7cuVZQ9sCWHmw0GBK-Lg-PpbDqukQRMehG63xomTdUxMIEBjycq8tWDi6bPrh4h7cngL8VcL2Uc2e-k7LyLT8sSF_8R_5AeL01HTJcWjHfk4joQW7rOTGKxxkv3FCNOHo8tvm9p5nB0boCf6C5fzBtH-XTplDQ7guSGm5HgGTRUEENApDzEcajqf16apOvzDzVBVfNVPkY43qx8frXno9p18bQRNKxbsB0JQuBg"/>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Jane Doe</h3>
-                  <p className="text-sm text-primary">Founder & CEO</p>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-full aspect-square rounded-full overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800">
-                    <img alt="Headshot of John Smith, Lead Engineer" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnbf33W0d_ZpBp6mWgCVlPqJIOO9rys-pbyYF4uaVa05carYimIsJxUVhl9xImPDu3F_uQf-uxaHFoueEmida_O66oeLnCzY2XQfjZv3QF33McJ2sEem7a-j4EvVXOdL2mgCCU_1Ux8pgiHTe8G24YJeho_wK40odgkkwMyK7PcoIP2wNo-KRUW6nGWxgCFpFRqhUrgx-xsGUzx4G1BnDaEH3P85hdExTduqvrfnxps4bb5FrhrHBcjrQulAa8EpovzJApHkqsf4A"/>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">John Smith</h3>
-                  <p className="text-sm text-primary">Lead Engineer</p>
-                </div>
-                <div className="flex flex-col items-center text-center">
-                  <div className="w-full aspect-square rounded-full overflow-hidden mb-4 bg-slate-200 dark:bg-slate-800">
-                    <img alt="Headshot of Emily Johnson, Project Manager" className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiTyOTed1jk1xarCH4H-FP2beCLkuWk5DFtNhwlj9e3msa6AgOXDyJrMN12j-7F1BP_vyK4VklO0mArJQqpi5tStBFsphJImGm0R7NLjcYeJKtBUnV1JiCPJraxhuCfvmbbo0YUv-VpY71gqyd2a8GAX5a7r73ZB4sF3DiL4QX_kAdTBMIuypJRbe2b_58nmIi_zBYjCokq1sWKTj8lINdxFyM3wmrn_qo_UfBD1CX2oUZVXqCNh4DkMcalmWdaXEO51EEtHwfYDU"/>
-                  </div>
-                  <h3 className="text-lg font-bold text-slate-900 dark:text-slate-50">Emily Johnson</h3>
-                  <p className="text-sm text-primary">Head of Projects</p>
-                </div>
-                <div className="flex flex-col items-center text-center justify-center p-6 border-2 border-dashed border-slate-300 dark:border-slate-700 rounded-xl">
-                  <Link to="/careers" className="flex flex-col items-center text-slate-600 dark:text-slate-400 hover:text-primary dark:hover:text-primary transition-colors">
-                    <div className="flex items-center justify-center size-12 rounded-full bg-slate-200 dark:bg-slate-800 mb-4">
-                      <span className="material-symbols-outlined">arrow_forward</span>
-                    </div>
-                    <span className="font-bold text-center">View Full Team</span>
-                  </Link>
-                </div>
-              </div>
-            </section>
-
-            <section className="flex flex-col gap-8">
-              <div className="text-center">
-                <h2 className="text-slate-900 dark:text-slate-50 text-3xl font-bold tracking-tight">Our Workshop in Action</h2>
-                <p className="text-slate-600 dark:text-slate-400 text-lg mt-2">A glimpse into where the magic happens.</p>
-              </div>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div className="aspect-square rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
-                  <img alt="Wide shot of the engineering workshop." className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAeQzyGdIwMGn2pMTLfbcrP3opJp7HqLbI62y3Hhb___clPIr6lbS52MFYdqGKQiCHrP-6NoqqSyATZ44b5o90tOyEXw1M9duDmMShzKUjLrHISCFi7iBfSSVncvNpV3VToYBvTife89zrNjGiSydmXOmyoss25X9tAtpDp1t1-KhTcAcPIeGIpHgqS0xIkGaneq3yU8DzIeQRrS2spPyPk3MUyJ8s0mbnD8rZr9rjMiK2mj1THBHZ5KqwuvKvbOL4kfmjess3elIM"/>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
-                  <img alt="Detailed view of a CNC machine cutting metal." className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAPmJZXlyzUAPmrpKcmvuT6M6U38yRsSmm5CpYcNiDWWIXrsayHZLDIj89S_uXwwTI_J8WYFipSPJQtngAUjhlHVq0xXgHz593moRVpY6nnmb0ShP2uuwr5PkrCaaTOF0zd4McTZfwmuP6jq1kR8E06ubTi5ObC6ODgDNAt3ELNazTggdeQbgwm-Tb46UAV28AbmBCBbDa9THQwSlNJaOnKoWTxfx7-oyDcxaXTIIJC6fqU0GcgA6LKUw93-A9IXLf1grHzmmmgc0Q"/>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
-                  <img alt="Team members collaborating around a whiteboard." className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnbf33W0d_ZpBp6mWgCVlPqJIOO9rys-pbyYF4uaVa05carYimIsJxUVhl9xImPDu3F_uQf-uxaHFoueEmida_O66oeLnCzY2XQfjZv3QF33McJ2sEem7a-j4EvVXOdL2mgCCU_11Ux8pgiHTe8G24YJeho_wK40odgkkwMyK7PcoIP2wNo-KRUW6nGWxgCFpFRqhUrgx-xsGUzx4G1BnDaEH3P85hdExTduqvrfnxps4bb5FrhrHBcjrQulAa8EpovzJApHkqsf4A"/>
-                </div>
-                <div className="aspect-square rounded-xl overflow-hidden bg-slate-200 dark:bg-slate-800">
-                  <img alt="Close-up of a 3D printed prototype." className="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBaPFrvpWVrHL3G3YYUcxXX5JN_2zszhXJMM2rV7cuVZQ9sCWHmw0GBK-Lg-PpbDqukQRMehG63xomTdUxMIEBjycq8tWDi6bPrh4h7cngL8VcL2Uc2e-k7LyLT8sSF_8R_5AeL01HTJcWjHfk4joQW7rOTGKxxkv3FCNOHo8tvm9p5nB0boCf6C5fzBtH-XTplDQ7guSGm5HgGTRUEENApDzEcajqf16apOvzDzVBVfNVPkY43qx8frXno9p18bQRNKxbsB0JQuBg"/>
-                </div>
-              </div>
-            </section>
-
+    <div className="bg-white dark:bg-slate-900 text-slate-800 dark:text-slate-200">
+      {/* Hero Section */}
+      <div className="relative isolate overflow-hidden py-24 sm:py-32">
+        <img
+          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?q=80&w=2940&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+          alt="Our Team"
+          className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center"
+        />
+        <div className="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
+          <div className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }} />
+        </div>
+        <div className="absolute -top-52 left-1/2 -z-10 -translate-x-1/2 transform-gpu blur-3xl sm:top-[-28rem] sm:ml-16 sm:translate-x-0 sm:transform-gpu" aria-hidden="true">
+          <div className="aspect-[1097/845] w-[68.5625rem] bg-gradient-to-tr from-[#ff4694] to-[#776fff] opacity-20" style={{ clipPath: 'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)' }} />
+        </div>
+        <div className="mx-auto max-w-7xl px-6 lg:px-8">
+          <div className="mx-auto max-w-2xl lg:mx-0">
+            <h2 className="text-4xl font-bold tracking-tight text-white sm:text-6xl">About Us</h2>
+            <p className="mt-6 text-lg leading-8 text-slate-200">
+              We are a passionate team of innovators, designers, and engineers dedicated to turning your ideas into reality. At SF Tech, we believe in the power of collaboration and technology to create groundbreaking solutions.
+            </p>
           </div>
         </div>
-        <div className="bg-white dark:bg-slate-900/50">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 sm:py-20">
-                <div className="max-w-4xl mx-auto text-center">
-                    <h2 className="text-3xl sm:text-4xl font-black text-slate-900 dark:text-slate-50 tracking-tight">Ready to Build Something Great?</h2>
-                    <p className="mt-4 text-lg text-slate-600 dark:text-slate-400">Let's turn your vision into reality. Explore our services or get in touch for a custom quote.</p>
-                    <div className="mt-8 flex justify-center gap-4">
-                        <Link to="/services" className="flex items-center justify-center rounded-lg h-12 px-6 bg-primary text-white text-base font-bold hover:bg-primary/90 transition-colors">
-                            <span className="truncate">Explore Services</span>
-                        </Link>
-                        <Link to="/quote" className="flex items-center justify-center rounded-lg h-12 px-6 bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200 text-base font-bold hover:bg-slate-300 dark:hover:bg-slate-700 transition-colors">
-                            <span className="truncate">Request a Quote</span>
-                        </Link>
-                    </div>
-                </div>
-            </div>
+      </div>
+
+      {/* Mission and Values Section */}
+      <div className="mx-auto max-w-7xl px-6 lg:px-8 py-24 sm:py-32">
+        <div className="mx-auto max-w-2xl lg:text-center">
+          <p className="text-base font-semibold leading-7 text-primary">Our Purpose</p>
+          <h2 className="mt-2 text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">
+            Pioneering the Future of Technology
+          </h2>
+          <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-300">
+            Our mission is to empower creators and businesses by providing state-of-the-art tools and expertise. We bridge the gap between imagination and manufacturing, making innovation accessible to all.
+          </p>
         </div>
-      </main>
+        <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-8 gap-y-10 lg:max-w-none lg:grid-cols-2 lg:gap-y-16">
+            <div className="relative pl-16">
+              <dt className="text-base font-semibold leading-7 text-slate-900 dark:text-white">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                  <FaUsers className="h-6 w-6 text-white" />
+                </div>
+                Collaboration
+              </dt>
+              <dd className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-300">
+                We believe the best ideas are born from teamwork. We work closely with our clients at every step to ensure their vision is realized.
+              </dd>
+            </div>
+            <div className="relative pl-16">
+              <dt className="text-base font-semibold leading-7 text-slate-900 dark:text-white">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                  <FaLightbulb className="h-6 w-6 text-white" />
+                </div>
+                Innovation
+              </dt>
+              <dd className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-300">
+                We constantly explore new technologies and methods to push the boundaries of what's possible, from 3D printing to advanced product design.
+              </dd>
+            </div>
+            <div className="relative pl-16">
+              <dt className="text-base font-semibold leading-7 text-slate-900 dark:text-white">
+                <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-primary">
+                  <FaRocket className="h-6 w-6 text-white" />
+                </div>
+                Execution
+              </dt>
+              <dd className="mt-2 text-base leading-7 text-slate-600 dark:text-slate-300">
+                Our team is committed to excellence. We deliver high-quality results on time, ensuring your project is a success from concept to completion.
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
+      {/* Team Section */}
+      <div className="bg-slate-50 dark:bg-slate-800 py-24 sm:py-32">
+        <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900 dark:text-white sm:text-4xl">Meet our leadership</h2>
+            <p className="mt-6 text-lg leading-8 text-slate-600 dark:text-slate-300">
+              Our team consists of industry experts with a shared passion for technology and design. We are dedicated to helping you succeed.
+            </p>
+          </div>
+          <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+            {teamMembers.map((person) => (
+              <li key={person.name}>
+                <div className="flex items-center gap-x-6">
+                  <img className="h-16 w-16 rounded-full object-cover" src={person.imageUrl} alt="" />
+                  <div>
+                    <h3 className="text-base font-semibold leading-7 tracking-tight text-slate-900 dark:text-white">{person.name}</h3>
+                    <p className="text-sm font-semibold leading-6 text-primary">{person.role}</p>
+                  </div>
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   );
 };
 
-export default About;
+export default AboutPage;
