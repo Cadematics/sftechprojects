@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { collection, addDoc, doc, updateDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, addDoc, updateDoc, serverTimestamp } from 'firebase/firestore';
 import { db, storage } from '../firebase';
 import { ref, uploadBytes, getDownloadURL } from 'firebase/storage';
 
@@ -13,7 +13,6 @@ const Quote = () => {
   const [files, setFiles] = useState([]);
   const [status, setStatus] = useState('new'); // new, submitting, success, error
   const [error, setError] = useState(null);
-  const [debugUrl, setDebugUrl] = useState(''); // New state for the debug URL
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -23,53 +22,6 @@ const Quote = () => {
   const handleFileChange = (e) => {
     const selectedFiles = Array.from(e.target.files);
     setFiles(selectedFiles);
-  };
-
-  const handleTestUpload = async () => {
-    setDebugUrl('Testing...');
-    setError(null);
-    try {
-      // 1. Create dummy Firestore document
-      console.log("RequestQuote (Debug): Creating test document...");
-      const docRef = await addDoc(collection(db, 'quoteRequests'), {
-        name: "Storage Test",
-        email: "storage@test.local",
-        serviceCategory: "Test",
-        description: "Testing Storage upload",
-        createdAt: serverTimestamp(),
-        status: "test",
-        fileUrls: [],
-      });
-      console.log(`RequestQuote (Debug): Test document created with ID = ${docRef.id}`);
-
-      // 2. Upload dummy file
-      console.log("RequestQuote (Debug): Uploading test file...");
-      const dummyFile = new Blob(['Hello from debug upload'], { type: 'text/plain' });
-      const storageRef = ref(storage, `quoteRequests/${docRef.id}/uploads/debug.txt`);
-      await uploadBytes(storageRef, dummyFile);
-       console.log("RequestQuote (Debug): Test file uploaded successfully.");
-
-      // 3. Get download URL
-      console.log("RequestQuote (Debug): Getting download URL...");
-      const downloadURL = await getDownloadURL(storageRef);
-      console.log(`RequestQuote (Debug): Got download URL: ${downloadURL}`);
-
-      // 4. Save URL to Firestore
-      console.log("RequestQuote (Debug): Updating test document with URL...");
-      await updateDoc(docRef, {
-        fileUrls: [downloadURL],
-      });
-      console.log("RequestQuote (Debug): Test document updated.");
-
-      // 5. Display URL
-      setDebugUrl(downloadURL);
-    } catch (error) {
-      console.error('RequestQuote (Debug) ERROR:', error);
-      const errorMessage = `Debug Error: ${error.message}`;
-      setError(errorMessage);
-      setDebugUrl('');
-      setStatus('error');
-    }
   };
 
   const handleSubmit = async (e) => {
@@ -85,45 +37,60 @@ const Quote = () => {
       return;
     }
 
-    let docRef;
+    let docRef = null;
+    const fileUrls = [];
 
     try {
       console.log("RequestQuote: Creating Firestore document...");
-      docRef = await addDoc(collection(db, 'quoteRequests'), {
-        ...formData,
-        createdAt: serverTimestamp(),
-        status: 'new',
-        fileUrls: [],
-      });
-      console.log(`RequestQuote: Document created with ID = ${docRef.id}`);
+      try {
+        docRef = await addDoc(collection(db, 'quoteRequests'), {
+          ...formData,
+          createdAt: serverTimestamp(),
+          status: 'new',
+          fileUrls: [],
+        });
+        console.log(`RequestQuote: Document created with ID = ${docRef.id}`);
 
-      const fileUrls = [];
-      const uploadPromises = files.map(async (file) => {
-        const storageRef = ref(storage, `quoteRequests/${docRef.id}/uploads/${file.name}`);
-        let downloadURL;
+        if (files.length > 0) {
+          const uploadPromises = files.map(async (file) => {
+            const storageRef = ref(storage, `quoteRequests/${docRef.id}/uploads/${file.name}`);
+            console.log(`RequestQuote: Uploading file ${file.name}...`);
+            await uploadBytes(storageRef, file);
+            const downloadURL = await getDownloadURL(storageRef);
+            fileUrls.push(downloadURL);
+          });
 
-        try {
-          console.log(`RequestQuote: Uploading file ${file.name}...`);
-          await uploadBytes(storageRef, file);
-          console.log(`RequestQuote: Upload success for ${file.name}`);
+          await Promise.all(uploadPromises);
 
-          console.log(`RequestQuote: Getting download URL for ${file.name}`);
-          downloadURL = await getDownloadURL(storageRef);
-          fileUrls.push(downloadURL);
-          console.log(`RequestQuote: URL for ${file.name} is ${downloadURL}`);
-        } catch (uploadError) {
-            const errorMessage = `Failed to upload ${file.name}: ${uploadError.message}`;
-            console.error(`RequestQuote ERROR: ${errorMessage}`);
-            throw new Error('There was a problem uploading your files. Please try again or contact support.');
+          if (fileUrls.length > 0) {
+            console.log("RequestQuote: Updating Firestore document with all file URLs...");
+            await updateDoc(docRef, { fileUrls: fileUrls });
+          }
         }
+      } catch (dbError) {
+        console.warn("Firestore database write failed (check security rules):", dbError);
+      }
+
+      // Send email notification to site owner via Mailgun serverless endpoint
+      console.log("RequestQuote: Sending email notification via /api/send-email...");
+      const emailResponse = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          type: 'quote',
+          name: formData.name,
+          email: formData.email,
+          serviceCategory: formData.serviceCategory,
+          description: formData.description,
+          fileUrls: fileUrls,
+        }),
       });
 
-      await Promise.all(uploadPromises);
-      console.log("RequestQuote: All uploads completed");
+      const emailResult = await emailResponse.json().catch(() => ({}));
 
-      if (fileUrls.length > 0) {
-        console.log("RequestQuote: Updating Firestore document with all file URLs...");
-        await updateDoc(docRef, { fileUrls: fileUrls });
+      // If both database and email failed, throw an error
+      if (!docRef && !emailResponse.ok) {
+        throw new Error(emailResult.error || 'There was an issue submitting your request. Please try again.');
       }
 
       setStatus('success');
@@ -134,12 +101,11 @@ const Quote = () => {
         description: '',
       });
       setFiles([]);
-
     } catch (err) {
-        const finalErrorMessage = err.message || 'An unexpected error occurred.';
-        console.error(`RequestQuote ERROR: ${finalErrorMessage}`);
-        setError(finalErrorMessage);
-        setStatus('error');
+      const finalErrorMessage = err.message || 'An unexpected error occurred.';
+      console.error(`RequestQuote ERROR: ${finalErrorMessage}`);
+      setError(finalErrorMessage);
+      setStatus('error');
     }
   };
 
@@ -269,46 +235,34 @@ const Quote = () => {
                         )}
                         </div>
                     </div>
-                    </div>
+                  </div>
               </div>
             </div>
 
             <div className="mt-10 pt-8 border-t border-slate-900/10">
-                {/* <div className="mb-4 p-4 border border-dashed border-yellow-500 rounded-md">
-                    <div className="flex items-center justify-between gap-x-6 ">
-                        <button
-                            type="button"
-                            onClick={handleTestUpload}
-                            className="rounded-md bg-yellow-500 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-yellow-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600"
-                        >
-                            Test Storage Upload
-                        </button>
-                        {debugUrl && (
-                            <div className="text-sm overflow-x-auto">
-                                <strong>Debug URL:</strong> <a href={debugUrl} target="_blank" rel="noopener noreferrer" className="text-blue-600 break-all">{debugUrl}</a>
-                            </div>
-                        )}
-                    </div>
-                </div>
-
                 {status === 'success' && (
-                    <div className="mb-4 rounded-md bg-green-50 p-4">
-                        <div className="flex">
-                            <div className="ml-3">
-                                <p className="text-sm font-medium text-green-800">Thank you! Your quote request has been submitted.</p>
-                            </div>
-                        </div>
+                  <div className="mb-6 rounded-lg bg-green-50 border border-green-200 p-4 shadow-sm" role="status">
+                    <div className="flex items-center">
+                      <svg className="h-5 w-5 text-green-600 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      <p className="text-sm font-semibold text-green-800">
+                        Thank you! Your quote request has been submitted successfully. We will review your details and respond shortly.
+                      </p>
                     </div>
+                  </div>
                 )}
+
                 {status === 'error' && error && (
-                    <div className="mb-4 rounded-md bg-red-50 p-4">
-                        <div className="flex">
-                            <div className="ml-3">
-                                <p className="text-sm font-medium text-red-800">{error}</p>
-                            </div>
-                        </div>
+                  <div className="mb-6 rounded-lg bg-red-50 border border-red-200 p-4 shadow-sm" role="alert">
+                    <div className="flex items-center">
+                      <svg className="h-5 w-5 text-red-600 mr-2 flex-shrink-0" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                      </svg>
+                      <p className="text-sm font-semibold text-red-800">{error}</p>
                     </div>
-                )} */}
+                  </div>
+                )}
                 <div className="flex items-center justify-end gap-x-6">
                     {status === 'submitting' && <p className="text-slate-500">Submitting...</p>}
                     <button

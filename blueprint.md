@@ -41,16 +41,30 @@ This document provides a comprehensive blueprint of the BayLabTech web applicati
     - `AdminLogin`: The login form component used on the `/admin` page.
     - `QuoteRequestsTable`: A reusable component for displaying and filtering quote requests in the admin dashboard.
 
-## Recent Changes: Project Renaming
+## Recent Changes: Mailgun Email Notification & Form Wiring
 
-The most recent set of changes involved a comprehensive renaming of the project from its old identifier, "SFTechProjects," to its new, official name, "BayLabTech."
+Implemented direct email notifications for both the Contact and Quote request forms using Mailgun and Vercel Serverless Functions.
 
 **Plan and Steps Executed:**
 
-1.  **Global Search and Replace:** A thorough search was conducted across the entire codebase to identify all instances of "SFTechProjects" and "sftechprojects." Each instance was then carefully replaced with "BayLabTech" to ensure brand consistency.
+1.  **Serverless Email Dispatch (`api/send-email.js`):**
+    - Created a lightweight Vercel Serverless Function running on Node.js.
+    - Integrated with Mailgun's REST API (`api.mailgun.net/v3/{domain}/messages`) with HTTP Basic Authentication.
+    - Added styled HTML templates and plain-text fallbacks for both Contact inquiries and Quote requests (with file attachment links).
+    - Configured reply-to headers so replies go directly to the customer's email address.
 
-2.  **Firebase Configuration Update:** The Firebase configuration object in `src/firebase.js` was updated to reflect the new Firebase project's credentials, including the new `projectId`, `authDomain`, and `storageBucket`.
+2.  **Contact Form Integration (`src/pages/Contact.jsx`):**
+    - Added React state management for `name`, `email`, and `message`.
+    - Wired `handleSubmit` to POST to `/api/send-email`.
+    - Added interactive states: submitting indicator, accessible green success banner, and red error banner.
 
-3.  **Verification and Testing:** After the renaming, a full review of the application was performed to ensure that all changes were applied correctly and that the application remained fully functional. This included testing the Firebase integration to confirm that the application was correctly connecting to the new Firebase project.
+3.  **Quote Form Enhancement (`src/pages/Quote.jsx`):**
+    - Updated `handleSubmit` to call `/api/send-email` upon submission, linking all uploaded file URLs.
+    - Added resilient fallback: even if client-side Firestore fails, the email dispatch is still attempted.
+    - Restored and polished the user-facing success and error notification banners.
 
-4.  **Documentation:** This `blueprint.md` file was created to provide a detailed overview of the project and to document the renaming process for future reference.
+4.  **Security & Environment Configuration:**
+    - Created `.env.example` and `.env.local` templates for `MAILGUN_API_KEY`, `MAILGUN_DOMAIN`, `MAILGUN_RECIPIENT_EMAIL`, `MAILGUN_FROM_EMAIL`, and `MAILGUN_REGION`.
+    - Verified `.env.local` is ignored in `.gitignore` to prevent secret leakage.
+    - Updated `firestore.rules` to allow public creation of quote requests while maintaining strict authentication for admin read/update operations.
+
