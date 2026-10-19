@@ -30,6 +30,7 @@ function App() {
       <div className="bg-background-light font-display text-slate-800">
         {/* <Header /> */}
         <Navbar />
+        {/* <Header /> */}
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
